@@ -1,56 +1,42 @@
 package org.example.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import org.example.model.User;
+import org.example.service.UserService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.example.model.User;
-import org.example.service.UserService;
-
 import java.io.IOException;
 
 public class RegisterController {
 
-    @FXML
-    private TextField usernameField;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private PasswordField confirmPasswordField;
+    @FXML private TextField emailField;
+    @FXML private TextField firstNameField;
+    @FXML private TextField lastNameField;
+    @FXML private Label errorLabel;
+    @FXML private Label successLabel;
 
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private PasswordField confirmPasswordField;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private TextField firstNameField;
-
-    @FXML
-    private TextField lastNameField;
-
-    @FXML
-    private Label errorLabel;
-
-    @FXML
-    private Label successLabel;
-
-    private final UserService userService = new UserService();
+    // Use the singleton instance - SAME instance as LoginController
+    private final UserService userService = UserService.getInstance();
 
     @FXML
     private void handleRegister() {
         errorLabel.setVisible(false);
         successLabel.setVisible(false);
 
-        String username = usernameField.getText();
+        String username = usernameField.getText().trim();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
-        String email = emailField.getText();
-        String firstName = firstNameField.getText();
-        String lastName = lastNameField.getText();
+        String email = emailField.getText().trim();
+        String firstName = firstNameField.getText().trim();
+        String lastName = lastNameField.getText().trim();
 
+        // Validation
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showError("Username and password are required");
             return;
@@ -77,12 +63,13 @@ public class RegisterController {
         }
 
         try {
-            User newUser = new User(0, username, password, email, firstName, lastName);
+            // Generate ID (in real app, use database auto-increment)
+            int newId = userService.getAllUsers().size() + 1;
+            User newUser = new User(newId, username, password, email, firstName, lastName);
 
             userService.register(newUser);
 
             showSuccess("Registration successful! You can now login.");
-
             clearForm();
 
         } catch (IllegalArgumentException e) {
@@ -95,10 +82,14 @@ public class RegisterController {
     @FXML
     public void goToLogin() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+            Parent root = loader.load();
+
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Login");
+            stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
