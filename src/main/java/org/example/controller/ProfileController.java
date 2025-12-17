@@ -192,7 +192,7 @@ public class ProfileController {
 
         try {
             // Update password
-            currentUser.setPassword(newPassword);
+            currentUser.setPasswordHash(newPassword);
             userService.updateProfile(currentUser);
 
             // Clear password fields
