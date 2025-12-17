@@ -36,7 +36,7 @@
             <Label text="Password:" styleClass="form-label" wrapText="true"
                    GridPane.rowIndex="1" GridPane.columnIndex="0"/>
             <PasswordField fx:id="passwordField"
-                           promptText="Enter password (min 6 chars)"
+                           promptText="Enter password (min 8 chars)"
                            styleClass="password-field"
                            GridPane.rowIndex="1" GridPane.columnIndex="1">
                 <GridPane.hgrow>ALWAYS</GridPane.hgrow>
@@ -57,7 +57,8 @@
                    GridPane.rowIndex="3" GridPane.columnIndex="0"/>
             <TextField fx:id="emailField" promptText="Enter email address"
                        styleClass="text-field"
-                       GridPane.rowIndex="3" GridPane.columnIndex="1">
+                       GridPane.rowIndex="3" GridPane.columnIndex="1"
+                       onKeyTyped="#onEmailKeyTyped">
                 <GridPane.hgrow>ALWAYS</GridPane.hgrow>
             </TextField>
 
