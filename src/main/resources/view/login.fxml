@@ -1,41 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.controller.LoginController"
+            stylesheets="@app.css"
             prefWidth="400" prefHeight="300">
 
-    <VBox spacing="10"
-          alignment="CENTER"
-          AnchorPane.topAnchor="0"
-          AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0">
+    <VBox spacing="15" alignment="CENTER" styleClass="container"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
-        <Label text="Login"
-               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+        <Label text="Login" styleClass="title" wrapText="true"/>
 
-        <TextField fx:id="usernameField"
-                   promptText="Username"
-                   prefWidth="250"/>
+        <TextField fx:id="usernameField" promptText="Username"
+                   styleClass="text-field" maxWidth="300">
+            <HBox.hgrow>ALWAYS</HBox.hgrow>
+        </TextField>
 
-        <PasswordField fx:id="passwordField"
-                       promptText="Password"
-                       prefWidth="250"/>
+        <PasswordField fx:id="passwordField" promptText="Password"
+                       styleClass="password-field" maxWidth="300">
+            <HBox.hgrow>ALWAYS</HBox.hgrow>
+        </PasswordField>
 
-        <Label fx:id="errorLabel"
-               textFill="red"
-               visible="false"/>
+        <Label fx:id="errorLabel" styleClass="error-label"
+               visible="false" wrapText="true" maxWidth="300"/>
 
-        <Button text="Login"
-                prefWidth="250"
-                onAction="#handleLogin"/>
+        <Button text="Login" styleClass="btn btn-primary"
+                onAction="#handleLogin" maxWidth="300">
+            <HBox.hgrow>ALWAYS</HBox.hgrow>
+        </Button>
 
-        <Hyperlink text="Create an account"
-                   onAction="#goToRegister"/>
-
+        <Hyperlink text="Create an account" onAction="#goToRegister"
+                   styleClass="hyperlink"/>
     </VBox>
 </AnchorPane>

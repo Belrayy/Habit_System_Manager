@@ -47,7 +47,7 @@ public class RegisterController {
             return;
         }
 
-        if (password.length() < 6) {
+        if (password.length() < 8) {
             showError("Password must be at least 6 characters");
             return;
         }

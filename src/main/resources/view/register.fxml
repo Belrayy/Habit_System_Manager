@@ -1,100 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.controller.RegisterController"
-            prefWidth="500" prefHeight="550"
-            style="-fx-background-color: #f5f5f5;">
+            stylesheets="@app.css"
+            prefWidth="500" prefHeight="550">
 
     <!-- Main Container -->
-    <VBox spacing="15"
-          alignment="CENTER"
-          AnchorPane.topAnchor="20"
-          AnchorPane.bottomAnchor="20"
-          AnchorPane.leftAnchor="20"
-          AnchorPane.rightAnchor="20"
-          style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
+    <VBox spacing="15" alignment="CENTER" styleClass="container"
+          AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10"
+          AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
 
         <!-- Title -->
-        <Label text="Create Account"
-               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        <Label text="Create Account" styleClass="title" wrapText="true"/>
 
         <!-- Form Fields -->
-        <GridPane hgap="10" vgap="15">
+        <GridPane styleClass="form-grid" hgap="8" vgap="10">
             <columnConstraints>
-                <ColumnConstraints prefWidth="120" halignment="RIGHT"/>
-                <ColumnConstraints prefWidth="250"/>
+                <ColumnConstraints prefWidth="100" halignment="RIGHT" hgrow="SOMETIMES"/>
+                <ColumnConstraints prefWidth="200" hgrow="ALWAYS" maxWidth="Infinity"/>
             </columnConstraints>
 
             <!-- Username -->
-            <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="usernameField"
-                       promptText="Enter username"
-                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Username:" styleClass="form-label" wrapText="true"
+                   GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="usernameField" promptText="Enter username"
+                       styleClass="text-field"
+                       GridPane.rowIndex="0" GridPane.columnIndex="1">
+                <GridPane.hgrow>ALWAYS</GridPane.hgrow>
+            </TextField>
 
             <!-- Password -->
-            <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label text="Password:" styleClass="form-label" wrapText="true"
+                   GridPane.rowIndex="1" GridPane.columnIndex="0"/>
             <PasswordField fx:id="passwordField"
                            promptText="Enter password (min 6 chars)"
-                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                           styleClass="password-field"
+                           GridPane.rowIndex="1" GridPane.columnIndex="1">
+                <GridPane.hgrow>ALWAYS</GridPane.hgrow>
+            </PasswordField>
 
             <!-- Confirm Password -->
-            <Label text="Confirm Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label text="Confirm:" styleClass="form-label" wrapText="true"
+                   GridPane.rowIndex="2" GridPane.columnIndex="0"/>
             <PasswordField fx:id="confirmPasswordField"
                            promptText="Re-enter password"
-                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                           styleClass="password-field"
+                           GridPane.rowIndex="2" GridPane.columnIndex="1">
+                <GridPane.hgrow>ALWAYS</GridPane.hgrow>
+            </PasswordField>
 
             <!-- Email -->
-            <Label text="Email:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="emailField"
-                       promptText="Enter email address"
-                       GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label text="Email:" styleClass="form-label" wrapText="true"
+                   GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="emailField" promptText="Enter email address"
+                       styleClass="text-field"
+                       GridPane.rowIndex="3" GridPane.columnIndex="1">
+                <GridPane.hgrow>ALWAYS</GridPane.hgrow>
+            </TextField>
 
             <!-- First Name -->
-            <Label text="First Name:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <TextField fx:id="firstNameField"
-                       promptText="Enter first name"
-                       GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <Label text="First Name:" styleClass="form-label" wrapText="true"
+                   GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="firstNameField" promptText="Enter first name"
+                       styleClass="text-field"
+                       GridPane.rowIndex="4" GridPane.columnIndex="1">
+                <GridPane.hgrow>ALWAYS</GridPane.hgrow>
+            </TextField>
 
             <!-- Last Name -->
-            <Label text="Last Name:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-            <TextField fx:id="lastNameField"
-                       promptText="Enter last name"
-                       GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+            <Label text="Last Name:" styleClass="form-label" wrapText="true"
+                   GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <TextField fx:id="lastNameField" promptText="Enter last name"
+                       styleClass="text-field"
+                       GridPane.rowIndex="5" GridPane.columnIndex="1">
+                <GridPane.hgrow>ALWAYS</GridPane.hgrow>
+            </TextField>
         </GridPane>
 
         <!-- Error Label -->
-        <Label fx:id="errorLabel"
-               style="-fx-text-fill: red; -fx-font-weight: bold;"
-               visible="false"
-               wrapText="true"
-               maxWidth="350"/>
+        <Label fx:id="errorLabel" styleClass="error-label"
+               visible="false" wrapText="true" maxWidth="Infinity"/>
 
         <!-- Success Label -->
-        <Label fx:id="successLabel"
-               style="-fx-text-fill: green; -fx-font-weight: bold;"
-               visible="false"
-               wrapText="true"
-               maxWidth="350"/>
+        <Label fx:id="successLabel" styleClass="success-label"
+               visible="false" wrapText="true" maxWidth="Infinity"/>
 
         <!-- Buttons -->
-        <HBox spacing="20" alignment="CENTER">
-            <Button text="Register"
-                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 25;"
-                    onAction="#handleRegister"/>
-            <Button text="Clear Form"
-                    style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 25;"
-                    onAction="#clearForm"/>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Register" styleClass="btn btn-primary"
+                    onAction="#handleRegister" wrapText="true" maxWidth="Infinity">
+                <HBox.hgrow>ALWAYS</HBox.hgrow>
+            </Button>
+            <Button text="Clear" styleClass="btn btn-secondary"
+                    onAction="#clearForm" wrapText="true" maxWidth="Infinity">
+                <HBox.hgrow>ALWAYS</HBox.hgrow>
+            </Button>
         </HBox>
 
         <!-- Login Link -->
         <HBox spacing="5" alignment="CENTER">
-            <Label text="Already have an account?"/>
-            <Hyperlink text="Login here" onAction="#goToLogin"/>
+            <Label text="Already have an account?" wrapText="true"/>
+            <Hyperlink text="Login here" onAction="#goToLogin" styleClass="hyperlink" wrapText="true"/>
         </HBox>
-
     </VBox>
 </AnchorPane>

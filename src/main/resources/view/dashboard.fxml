@@ -1,108 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.controller.DashboardController"
-            prefWidth="800" prefHeight="600"
-            style="-fx-background-color: #f0f0f0;">
+            stylesheets="@app.css"
+            prefWidth="800" prefHeight="600">
 
-    <!-- Top Menu Bar -->
-    <top>
-        <MenuBar BorderPane.alignment="CENTER">
-            <Menu text="File">
-                <MenuItem text="Exit" onAction="#handleExit"/>
-            </Menu>
-            <Menu text="Help">
-                <MenuItem text="About"/>
-            </Menu>
-        </MenuBar>
-    </top>
+    <!-- Top Menu Bar - Made smaller -->
+<!--    <top>-->
+<!--        <MenuBar BorderPane.alignment="CENTER" styleClass="menu-bar-small">-->
+<!--            <Menu text="File" styleClass="menu-small">-->
+<!--                <MenuItem text="Exit" onAction="#handleExit" styleClass="menu-item-small"/>-->
+<!--            </Menu>-->
+<!--            <Menu text="Help" styleClass="menu-small">-->
+<!--                <MenuItem text="About" styleClass="menu-item-small"/>-->
+<!--            </Menu>-->
+<!--        </MenuBar>-->
+<!--    </top>-->
 
-    <!-- Left Navigation Panel -->
+    <!-- Left Navigation Panel - Made responsive -->
     <left>
-        <VBox spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 20;"
-              minWidth="200" maxWidth="200">
-
-            <Label text="Navigation"
-                   style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-            <Separator style="-fx-background-color: #34495e;"/>
+        <VBox spacing="10" styleClass="nav-panel" minWidth="150" prefWidth="200" maxWidth="250">
+            <Label text="Navigation" styleClass="nav-title"/>
+            <Separator styleClass="separator"/>
 
             <!-- Home Button -->
             <Button fx:id="homeBtn" text="🏠 Home"
-                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px;"
+                    styleClass="nav-btn btn-primary"
                     onAction="#showHome"
-                    prefWidth="160" prefHeight="40"/>
+                    maxWidth="Infinity">
+                <VBox.margin>
+                    <Insets left="5" right="5"/>
+                </VBox.margin>
+                <HBox.hgrow>ALWAYS</HBox.hgrow>
+            </Button>
 
             <!-- Profile Button -->
             <Button fx:id="profileBtn" text="👤 Profile"
-                    style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-font-size: 14px;"
-                    onAction="#showProfile"
-                    prefWidth="160" prefHeight="40"/>
+                    styleClass="nav-btn btn-purple"
+                    onAction="#goToProfile"
+                    maxWidth="Infinity">
+                <VBox.margin>
+                    <Insets left="5" right="5"/>
+                </VBox.margin>
+                <HBox.hgrow>ALWAYS</HBox.hgrow>
+            </Button>
 
-            <Separator style="-fx-background-color: #34495e;"/>
+            <Separator styleClass="separator"/>
 
             <!-- Logout Button -->
             <Button fx:id="logoutBtn" text="🚪 Logout"
-                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px;"
+                    styleClass="nav-btn btn-danger"
                     onAction="#handleLogout"
-                    prefWidth="160" prefHeight="40"/>
+                    maxWidth="Infinity">
+                <VBox.margin>
+                    <Insets left="5" right="5"/>
+                </VBox.margin>
+                <HBox.hgrow>ALWAYS</HBox.hgrow>
+            </Button>
 
-            <!-- User Info -->
-            <VBox spacing="5" style="-fx-padding: 20 0 0 0;">
-                <Label fx:id="welcomeLabel"
-                       text="Welcome!"
-                       style="-fx-text-fill: white; -fx-font-size: 12px;"/>
-                <Label fx:id="userEmailLabel"
-                       text=""
-                       style="-fx-text-fill: #95a5a6; -fx-font-size: 11px;"/>
+            <!-- User Info - Made responsive -->
+            <VBox spacing="5" style="-fx-padding: 20 5 10 5;">
+                <Label fx:id="welcomeLabel" text="Welcome!"
+                       style="-fx-text-fill: white; -fx-font-size: 12px; -fx-wrap-text: true;"/>
+                <Label fx:id="userEmailLabel" text=""
+                       style="-fx-text-fill: #95a5a6; -fx-font-size: 11px; -fx-wrap-text: true;"/>
             </VBox>
         </VBox>
     </left>
 
-    <!-- Main Content Area -->
+    <!-- Main Content Area - Made responsive -->
     <center>
-        <StackPane fx:id="contentArea">
-            <!-- Default Home Content -->
-            <VBox fx:id="homeContent" spacing="20" alignment="CENTER">
-                <Label text="🏠 Welcome to Your Dashboard"
-                       style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-
-                <Label fx:id="dashboardWelcomeLabel"
-                       text=""
-                       style="-fx-font-size: 18px; -fx-text-fill: #7f8c8d;"/>
-
-
-            </VBox>
-
-            <!-- Profile Content (Hidden by default) -->
-            <VBox fx:id="profileContent" spacing="20" alignment="CENTER" visible="false">
-                <Label text="👤 User Profile"
-                       style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-
-                <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
-                    <Label fx:id="profileUsernameLabel" text="Username: " style="-fx-font-size: 16px;"/>
-                    <Label fx:id="profileEmailLabel" text="Email: " style="-fx-font-size: 16px;"/>
-                    <Label fx:id="profileNameLabel" text="Name: " style="-fx-font-size: 16px;"/>
+        <BorderPane fx:id="contentArea" styleClass="content-area">
+            <center>
+                <VBox fx:id="homeContent" spacing="20" alignment="CENTER">
+                    <Label text="🏠 Welcome to Your Dashboard"
+                           styleClass="welcome-text" wrapText="true" maxWidth="Infinity"
+                           textAlignment="CENTER"/>
+                    <Label fx:id="dashboardWelcomeLabel" text=""
+                           styleClass="user-info-text" wrapText="true" maxWidth="Infinity"
+                           textAlignment="CENTER"/>
                 </VBox>
-
-                <Button fx:id="profileBtn" text="👤 Profile"
-                        style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-font-size: 14px;"
-                        onAction="#showProfilePage"
-                prefWidth="160" prefHeight="40"/>
-            </VBox>
-        </StackPane>
+            </center>
+        </BorderPane>
     </center>
 
-    <!-- Status Bar -->
+    <!-- Status Bar - Made responsive -->
     <bottom>
-        <HBox style="-fx-background-color: #ecf0f1; -fx-padding: 5 10;" spacing="10">
-            <Label fx:id="statusLabel" text="Ready" style="-fx-text-fill: #7f8c8d;"/>
+        <HBox styleClass="status-bar" spacing="10">
+            <Label fx:id="statusLabel" text="Ready"
+                   styleClass="status-text" wrapText="true">
+                <HBox.hgrow>ALWAYS</HBox.hgrow>
+            </Label>
             <Separator orientation="VERTICAL"/>
-            <Label fx:id="loginTimeLabel" text="" style="-fx-text-fill: #95a5a6; -fx-font-size: 11px;"/>
+            <Label fx:id="loginTimeLabel" text=""
+                   style="-fx-text-fill: #95a5a6; -fx-font-size: 11px; -fx-wrap-text: true;"/>
         </HBox>
     </bottom>
 

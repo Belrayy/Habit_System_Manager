@@ -26,11 +26,6 @@ public class DashboardController {
     @FXML private Label loginTimeLabel;
 
     @FXML private VBox homeContent;
-    @FXML private VBox profileContent;
-
-    @FXML private Label profileUsernameLabel;
-    @FXML private Label profileEmailLabel;
-    @FXML private Label profileNameLabel;
 
     private final UserService userService = UserService.getInstance();
     private final LocalDateTime loginTime = LocalDateTime.now();
@@ -59,18 +54,12 @@ public class DashboardController {
         welcomeLabel.setText(welcomeText);
         dashboardWelcomeLabel.setText(welcomeText);
         userEmailLabel.setText(user.getEmail());
-
-        // Update profile labels
-        profileUsernameLabel.setText("Username: " + user.getUsername());
-        profileEmailLabel.setText("Email: " + user.getEmail());
-        profileNameLabel.setText("Name: " + user.getFirstName() + " " + user.getLastName());
     }
 
     @FXML
     private void showHome() {
-        // Show home content, hide profile
+        // Make sure home content is visible
         homeContent.setVisible(true);
-        profileContent.setVisible(false);
 
         // Update button styles
         homeBtn.setStyle("-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-size: 14px;");
@@ -80,16 +69,20 @@ public class DashboardController {
     }
 
     @FXML
-    private void showProfile() {
-        // Show profile content, hide home
-        homeContent.setVisible(false);
-        profileContent.setVisible(true);
+    private void goToProfile() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/profile.fxml"));
+            Parent root = loader.load();
 
-        // Update button styles
-        homeBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px;");
-        profileBtn.setStyle("-fx-background-color: #8e44ad; -fx-text-fill: white; -fx-font-size: 14px;");
+            Stage stage = (Stage) profileBtn.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Profile Settings");
+            stage.show();
 
-        statusLabel.setText("Profile page");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Cannot load profile page: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -125,22 +118,5 @@ public class DashboardController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    @FXML
-    private void showProfilePage() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/profile.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = (Stage) profileBtn.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Profile Settings");
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "Cannot load profile page: " + e.getMessage());
-        }
     }
 }

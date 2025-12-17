@@ -23,21 +23,21 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        // Quick test
-        UserService service = UserService.getInstance();
-
-        // Test user
-        User testUser = new User(1, "test", "test123", "test@test.com", "Test", "User");
-
-        try {
-            service.register(testUser);
-            System.out.println("Test user registered");
-
-            User loggedIn = service.login("test", "test123");
-            System.out.println("Test login successful: " + loggedIn.getUsername());
-        } catch (Exception e) {
-            System.out.println("Test failed: " + e.getMessage());
-        }
+//        // Quick test
+//        UserService service = UserService.getInstance();
+//
+//        // Test user
+//        User testUser = new User(1, "test", "test123", "test@test.com", "Test", "User");
+//
+//        try {
+//            service.register(testUser);
+//            System.out.println("Test user registered");
+//
+//            User loggedIn = service.login("test", "test123");
+//            System.out.println("Test login successful: " + loggedIn.getUsername());
+//        } catch (Exception e) {
+//            System.out.println("Test failed: " + e.getMessage());
+//        }
         launch(args);
     }
 }

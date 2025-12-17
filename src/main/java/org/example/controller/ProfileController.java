@@ -295,7 +295,7 @@ public class ProfileController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) backToDashboardBtn.getScene().getWindow();
+            Stage stage = (Stage) usernameLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Login");
             stage.show();
