@@ -438,3 +438,11 @@
 .menu-small .label {
     -fx-padding: 0px;
 }
+.btn-info {
+    -fx-background-color: #17a2b8;
+    -fx-text-fill: white;
+}
+
+.btn-info:hover {
+    -fx-background-color: #138496;
+}

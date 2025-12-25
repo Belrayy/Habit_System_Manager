@@ -143,7 +143,7 @@
 
                         <Label text="New Password:" wrapText="true"
                                GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <PasswordField fx:id="newPasswordField" promptText="At least 6 characters"
+                        <PasswordField fx:id="newPasswordField" promptText="At least 8 characters"
                                        styleClass="password-field"
                                        GridPane.rowIndex="1" GridPane.columnIndex="1">
                             <GridPane.hgrow>ALWAYS</GridPane.hgrow>
@@ -171,6 +171,19 @@
                         </Button>
                     </HBox>
                 </VBox>
+
+                <!-- Send verification email -->
+
+                <VBox fx:id="sendVerificationEmail" spacing="10" visible="true" styleClass="content-card">
+                    <Label text="Verify your E-mail" styleClass="danger-title" wrapText="true"/>
+                    <Button text="Send Verification Email"
+                            onAction="#handleSendTestEmail"
+                            styleClass="btn btn-info"
+                            wrapText="true" maxWidth="Infinity">
+                        <HBox.hgrow>ALWAYS</HBox.hgrow>
+                    </Button>
+                </VBox>
+
 
                 <!-- Danger Zone -->
                 <VBox spacing="5" styleClass="danger-zone">

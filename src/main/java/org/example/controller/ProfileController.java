@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -9,6 +10,9 @@ import org.example.service.UserService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import org.example.util.EmailUtil;
+import javafx.application.Platform;
+
 import java.io.IOException;
 
 public class ProfileController {
@@ -41,6 +45,11 @@ public class ProfileController {
 
     private final UserService userService = UserService.getInstance();
     private User currentUser;
+
+    //Limit rate email verification
+    private static final long EMAIL_COOLDOWN_MS = 60 * 1000; // 5 minutes
+    private static long lastEmailSentAt = 0;
+    private static long lastTestEmailSentAt = 0;
 
     @FXML
     public void initialize() {
@@ -134,6 +143,27 @@ public class ProfileController {
             updateDisplayInfo();
 
             showSuccess("Profile updated successfully!");
+
+        } catch (Exception e) {
+            showError("Error updating profile: " + e.getMessage());
+        }
+
+        try {
+            // Update user object
+            currentUser.setEmail(email);
+            currentUser.setFirstName(firstName);
+            currentUser.setLastName(lastName);
+
+            // Update in UserService
+            userService.updateProfile(currentUser);
+
+            // Update display info
+            updateDisplayInfo();
+
+            // Send confirmation email
+            sendProfileUpdateEmail();
+
+            showSuccess("Profile updated successfully! Confirmation email sent.");
 
         } catch (Exception e) {
             showError("Error updating profile: " + e.getMessage());
@@ -363,7 +393,115 @@ public class ProfileController {
     }
 
     private void showInfo(String message) {
-        messageLabel.setText(message);
-        messageLabel.setStyle("-fx-text-fill: #3498db; -fx-font-weight: bold;");
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
+    }
+
+    @FXML
+    private void handleSendTestEmail(ActionEvent event) {
+
+        long now = System.currentTimeMillis();
+
+        // Rate limiting
+        if (now - lastTestEmailSentAt < EMAIL_COOLDOWN_MS) {
+            long remaining = (EMAIL_COOLDOWN_MS - (now - lastTestEmailSentAt)) / 1000;
+            showInfo("Please wait " + remaining + " seconds before sending another test email.");
+            return;
+        }
+
+        lastTestEmailSentAt = now;
+
+        String subject = "Test Email from Habit System";
+        String messageBody = """
+        Hello %s,
+        
+        This is a test email sent from your Habit System profile.
+        
+        Your Profile Information:
+        - Username: %s
+        - Name: %s %s
+        - Email: %s
+        
+        If you received this email, your email settings are working correctly!
+        
+        Thank you for using Habit System.
+        
+        Best regards,
+        Habit System Team
+        """.formatted(
+                currentUser.getFirstName(),
+                currentUser.getUsername(),
+                currentUser.getFirstName(),
+                currentUser.getLastName(),
+                currentUser.getEmail()
+        );
+
+        new Thread(() -> {
+            boolean sent = EmailUtil.sendEmail(
+                    currentUser.getEmail(),
+                    subject,
+                    messageBody
+            );
+
+            if (sent) {
+                showInfo("Test email sent successfully!");
+            } else {
+                showInfo("Failed to send test email. Please try again later.");
+            }
+        }).start();
+    }
+
+
+    // Add this method to send profile update confirmation
+    private void sendProfileUpdateEmail() {
+        String subject = "Profile Updated - Habit System";
+        String messageBody = """
+        Dear %s,
+        
+        Your profile has been successfully updated in Habit System.
+        
+        Updated Information:
+        - Name: %s %s
+        - Email: %s
+        
+        If you did not make these changes, please contact support immediately.
+        
+        Thank you,
+        Habit System Team
+        """.formatted(
+                currentUser.getFirstName(),
+                currentUser.getFirstName(),
+                currentUser.getLastName(),
+                currentUser.getEmail()
+        );
+
+        long now = System.currentTimeMillis();
+
+        if (now - lastEmailSentAt < EMAIL_COOLDOWN_MS) {
+            showInfo("A confirmation email was recently sent.\nPlease wait a few minutes before trying again.");
+            return;
+        }
+
+        lastEmailSentAt = now;
+
+        new Thread(() -> {
+            boolean sent = EmailUtil.sendEmail(
+                    currentUser.getEmail(),
+                    subject,
+                    messageBody
+            );
+
+            if (sent) {
+                showInfo("A confirmation email has been sent to your email address.");
+            } else {
+                showInfo("Failed to send confirmation email. Please try again later.");
+            }
+        }).start();
+
     }
 }
