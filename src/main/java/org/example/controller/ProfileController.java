@@ -25,6 +25,7 @@ public class ProfileController {
     @FXML private PasswordField currentPasswordField;
     @FXML private PasswordField newPasswordField;
     @FXML private PasswordField confirmPasswordField;
+    @FXML private PasswordField profileCurrentPasswordField; // NEW: For profile changes
 
     // Labels and Messages
     @FXML private Label usernameLabel;
@@ -32,6 +33,7 @@ public class ProfileController {
     @FXML private Label nameLabel;
     @FXML private Label memberSinceLabel;
     @FXML private Label messageLabel;
+    @FXML private Label profilePasswordLabel; // NEW: For password requirement message
 
     // Buttons
     @FXML private Button saveChangesBtn;
@@ -45,6 +47,8 @@ public class ProfileController {
 
     private final UserService userService = UserService.getInstance();
     private User currentUser;
+    private String originalUsername; // Store original values
+    private String originalEmail;
 
     //Limit rate email verification
     private static final long EMAIL_COOLDOWN_MS = 60 * 1000; // 5 minutes
@@ -60,6 +64,10 @@ public class ProfileController {
             return;
         }
 
+        // Store original values
+        originalUsername = currentUser.getUsername();
+        originalEmail = currentUser.getEmail();
+
         // Populate display labels
         updateDisplayInfo();
 
@@ -71,28 +79,35 @@ public class ProfileController {
 
         // Set up field listeners for real-time validation
         setupFieldValidation();
+
+        // Initialize password requirement label
+        profilePasswordLabel.setText("");
+        profilePasswordLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 12px;");
     }
 
     private void updateDisplayInfo() {
         usernameLabel.setText("@" + currentUser.getUsername());
         emailLabel.setText(currentUser.getEmail());
         nameLabel.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
-        memberSinceLabel.setText("Member since: Today"); // You can add registration date to User class
+        //memberSinceLabel.setText("Member since: Today");
     }
 
     private void populateEditableFields() {
-        // Don't allow username change (usually username should be immutable)
         usernameField.setText(currentUser.getUsername());
-        usernameField.setDisable(true); // Username cannot be changed
+        usernameField.setDisable(false); // Enable username field for changes
 
         emailField.setText(currentUser.getEmail());
         firstNameField.setText(currentUser.getFirstName());
         lastNameField.setText(currentUser.getLastName());
 
         // Clear password fields
+        profileCurrentPasswordField.clear();
         currentPasswordField.clear();
         newPasswordField.clear();
         confirmPasswordField.clear();
+
+        // Reset password requirement label
+        profilePasswordLabel.setText("");
     }
 
     @FXML
@@ -100,9 +115,34 @@ public class ProfileController {
         clearMessages();
 
         // Get updated values
+        String username = usernameField.getText().trim();
         String email = emailField.getText().trim();
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
+        String profilePassword = profileCurrentPasswordField.getText();
+
+        // Check if username or email is being changed
+        boolean usernameChanged = !username.equals(originalUsername);
+        boolean emailChanged = !email.equals(originalEmail);
+
+        // If username or email is being changed, require password
+        if (usernameChanged || emailChanged) {
+            if (profilePassword.isEmpty()) {
+                showError("Please enter your current password to change username or email");
+                profileCurrentPasswordField.requestFocus();
+                profilePasswordLabel.setText("Password required for username/email changes");
+                return;
+            }
+
+            // Verify current password
+            if (!currentUser.getPassword().equals(profilePassword)) {
+                showError("Current password is incorrect for username/email changes");
+                profileCurrentPasswordField.clear();
+                profileCurrentPasswordField.requestFocus();
+                profilePasswordLabel.setText("Incorrect password");
+                return;
+            }
+        }
 
         // Validation
         if (email.isEmpty()) {
@@ -123,15 +163,53 @@ public class ProfileController {
             return;
         }
 
-        // Email format validation (basic)
-        if (!email.contains("@") || !email.contains(".")) {
+        // Username validation
+        if (username.isEmpty()) {
+            showError("Username cannot be empty");
+            usernameField.requestFocus();
+            return;
+        }
+
+        if (username.length() < 3) {
+            showError("Username must be at least 3 characters");
+            usernameField.requestFocus();
+            return;
+        }
+
+        // Email format validation
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             showError("Please enter a valid email address");
             emailField.requestFocus();
             return;
         }
 
         try {
+            // Check if new username already exists (if changed)
+            if (usernameChanged && !username.equals(originalUsername)) {
+                if (userService.usernameExists(username)) {
+                    showError("Username already exists. Please choose another one.");
+                    usernameField.requestFocus();
+                    return;
+                }
+            }
+
+            if (emailChanged && !email.equals(originalEmail)) {
+                try {
+                    if (userService.emailExists(email)) {
+                        showError("Email already registered. Please use a different email.");
+                        emailField.requestFocus();
+                        return;
+                    }
+                } catch (Exception e) {
+                    // If email check fails, still proceed but warn user
+                    System.err.println("Warning: Could not verify email uniqueness: " + e.getMessage());
+                    // Optionally ask user to confirm
+                    showInfo("Could not verify email uniqueness. Please ensure this email isn't already registered.");
+                }
+            }
+
             // Update user object
+            currentUser.setUsername(username);
             currentUser.setEmail(email);
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
@@ -139,26 +217,16 @@ public class ProfileController {
             // Update in UserService
             userService.updateProfile(currentUser);
 
-            // Update display info
-            updateDisplayInfo();
-
-            showSuccess("Profile updated successfully!");
-
-        } catch (Exception e) {
-            showError("Error updating profile: " + e.getMessage());
-        }
-
-        try {
-            // Update user object
-            currentUser.setEmail(email);
-            currentUser.setFirstName(firstName);
-            currentUser.setLastName(lastName);
-
-            // Update in UserService
-            userService.updateProfile(currentUser);
+            // Update original values
+            originalUsername = username;
+            originalEmail = email;
 
             // Update display info
             updateDisplayInfo();
+
+            // Clear password field
+            profileCurrentPasswordField.clear();
+            profilePasswordLabel.setText("");
 
             // Send confirmation email
             sendProfileUpdateEmail();
@@ -340,10 +408,22 @@ public class ProfileController {
         emailField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal) { // When focus lost
                 String email = emailField.getText().trim();
-                if (!email.isEmpty() && (!email.contains("@") || !email.contains("."))) {
+                if (!email.isEmpty() && !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
                     emailField.setStyle("-fx-border-color: #e74c3c; -fx-border-width: 1px;");
                 } else {
                     emailField.setStyle("");
+                }
+            }
+        });
+
+        // Username validation
+        usernameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) { // When focus lost
+                String username = usernameField.getText().trim();
+                if (!username.isEmpty() && username.length() < 3) {
+                    usernameField.setStyle("-fx-border-color: #e74c3c; -fx-border-width: 1px;");
+                } else {
+                    usernameField.setStyle("");
                 }
             }
         });
@@ -375,11 +455,49 @@ public class ProfileController {
                 confirmPasswordField.setStyle("-fx-border-color: #2ecc71; -fx-border-width: 1px;");
             }
         });
+
+        // Listen to username/email changes to update password requirement message
+        usernameField.textProperty().addListener((obs, oldVal, newVal) -> {
+            updatePasswordRequirementMessage();
+        });
+
+        emailField.textProperty().addListener((obs, oldVal, newVal) -> {
+            updatePasswordRequirementMessage();
+        });
+
+        profileCurrentPasswordField.textProperty().addListener((obs, oldVal, newVal) -> {
+            updatePasswordRequirementMessage();
+        });
+    }
+
+    private void updatePasswordRequirementMessage() {
+        String username = usernameField.getText().trim();
+        String email = emailField.getText().trim();
+        String password = profileCurrentPasswordField.getText();
+
+        boolean usernameChanged = !username.equals(originalUsername);
+        boolean emailChanged = !email.equals(originalEmail);
+
+        if (usernameChanged || emailChanged) {
+            if (password.isEmpty()) {
+                profilePasswordLabel.setText("Password required for username/email changes");
+                profilePasswordLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 12px;");
+            } else if (!currentUser.getPassword().equals(password)) {
+                profilePasswordLabel.setText("Incorrect password");
+                profilePasswordLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 12px;");
+            } else {
+                profilePasswordLabel.setText("Password verified ✓");
+                profilePasswordLabel.setStyle("-fx-text-fill: #27ae60; -fx-font-size: 12px;");
+            }
+        } else {
+            profilePasswordLabel.setText("");
+        }
     }
 
     private void clearMessages() {
         messageLabel.setText("");
         messageLabel.setStyle("");
+        profilePasswordLabel.setText("");
     }
 
     private void showSuccess(String message) {
@@ -455,7 +573,6 @@ public class ProfileController {
             }
         }).start();
     }
-
 
     // Add this method to send profile update confirmation
     private void sendProfileUpdateEmail() {

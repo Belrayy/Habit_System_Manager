@@ -8,17 +8,7 @@
             stylesheets="@app.css"
             prefWidth="800" prefHeight="600">
 
-    <!-- Top Menu Bar - Made smaller -->
-<!--    <top>-->
-<!--        <MenuBar BorderPane.alignment="CENTER" styleClass="menu-bar-small">-->
-<!--            <Menu text="File" styleClass="menu-small">-->
-<!--                <MenuItem text="Exit" onAction="#handleExit" styleClass="menu-item-small"/>-->
-<!--            </Menu>-->
-<!--            <Menu text="Help" styleClass="menu-small">-->
-<!--                <MenuItem text="About" styleClass="menu-item-small"/>-->
-<!--            </Menu>-->
-<!--        </MenuBar>-->
-<!--    </top>-->
+
 
     <!-- Left Navigation Panel - Made responsive -->
     <left>

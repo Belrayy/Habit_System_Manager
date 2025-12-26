@@ -12,17 +12,14 @@ public class Habit {
     private final IntegerProperty progress = new SimpleIntegerProperty();
     private final IntegerProperty streak = new SimpleIntegerProperty();
     private boolean completed;
-    private HabitCategory HabitCategory;
 
-
-    public Habit(int id, String title, String description, int progress, int streak,HabitCategory HabitCategory) {
+    public Habit(int id, String title, String description, int progress, int streak) {
         setId(id);
         setTitle(title);
         setDescription(description);
         setProgress(progress);
         setStreak(streak);
         setCompleted(false);
-        setHabitCategory(HabitCategory);
     }
 
     public void setId(Integer id) {this.id.set(id);}
@@ -31,8 +28,6 @@ public class Habit {
     public void setProgress(Integer progress) {this.progress.set(progress);}
     public void setStreak(Integer streak) {this.streak.set(streak);}
     public void setCompleted(boolean completed) {this.completed=completed;}
-    public void setHabitCategory(HabitCategory habitCategory) {this.HabitCategory=habitCategory;}
-
 
 
     public Integer getId() {return this.id.get();}
@@ -41,6 +36,4 @@ public class Habit {
     public Integer getProgress() {return this.progress.get();}
     public Integer getStreak() {return this.streak.get();}
     public boolean isCompleted() {return this.completed;}
-    public HabitCategory getHabitCategory() {return this.HabitCategory;}
-
 }

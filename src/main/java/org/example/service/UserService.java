@@ -4,6 +4,7 @@ import org.example.model.User;
 import org.example.repository.UserRepository;
 import org.example.util.PasswordUtil;
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
     private static UserService instance;
@@ -292,5 +293,54 @@ public class UserService {
         }
 
         System.out.println("DEBUG: Password reset for: " + username);
+    }
+
+
+    public boolean usernameExists(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            return false;
+        }
+
+        System.out.println("DEBUG: Checking if username exists: " + username);
+
+        try {
+            // Use the existing findByUsername method
+            Optional<User> userOpt = userRepository.findByUsername(username);
+            boolean exists = userOpt.isPresent();
+
+            System.out.println("DEBUG: Username '" + username + "' exists: " + exists);
+            return exists;
+
+        } catch (Exception e) {
+            System.err.println("ERROR checking username existence: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean emailExists(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return false;
+        }
+
+        System.out.println("DEBUG: Checking if email exists: " + email);
+
+        try {
+            // Alternative: Get all users and check for duplicate email
+            List<User> allUsers = getAllUsers();
+
+            // Skip checking for current user's email (if they're not changing it)
+            String currentEmail = currentUser != null ? currentUser.getEmail() : null;
+
+            boolean exists = allUsers.stream()
+                    .filter(user -> currentEmail == null || !user.getEmail().equalsIgnoreCase(currentEmail))
+                    .anyMatch(user -> user.getEmail().equalsIgnoreCase(email));
+
+            System.out.println("DEBUG: Email '" + email + "' exists: " + exists);
+            return exists;
+
+        } catch (Exception e) {
+            System.err.println("ERROR checking email existence: " + e.getMessage());
+            return false;
+        }
     }
 }

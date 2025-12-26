@@ -284,6 +284,12 @@
     -fx-text-fill: #7f8c8d;
 }
 
+.email-title{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e5eab;
+}
+
 /* Container adjustments */
 .container-small {
     -fx-padding: 15px;

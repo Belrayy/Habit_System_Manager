@@ -103,6 +103,19 @@
                                    GridPane.rowIndex="3" GridPane.columnIndex="1">
                             <GridPane.hgrow>ALWAYS</GridPane.hgrow>
                         </TextField>
+
+                        <!-- NEW: Password field for profile changes -->
+                        <Label text="Current Password (for username/email changes):" wrapText="true"
+                               GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <VBox GridPane.rowIndex="4" GridPane.columnIndex="1" spacing="5">
+                            <PasswordField fx:id="profileCurrentPasswordField"
+                                           promptText="Enter current password"
+                                           styleClass="password-field">
+                                <VBox.vgrow>ALWAYS</VBox.vgrow>
+                            </PasswordField>
+                            <Label fx:id="profilePasswordLabel" styleClass="info-label"
+                                   wrapText="true" maxWidth="Infinity"/>
+                        </VBox>
                     </GridPane>
 
                     <HBox spacing="5" style="-fx-padding: 10 0 0 0;">
@@ -173,9 +186,8 @@
                 </VBox>
 
                 <!-- Send verification email -->
-
                 <VBox fx:id="sendVerificationEmail" spacing="10" visible="true" styleClass="content-card">
-                    <Label text="Verify your E-mail" styleClass="danger-title" wrapText="true"/>
+                    <Label text="Verify your E-mail" styleClass="email-title" wrapText="true"/>
                     <Button text="Send Verification Email"
                             onAction="#handleSendTestEmail"
                             styleClass="btn btn-info"
@@ -183,7 +195,6 @@
                         <HBox.hgrow>ALWAYS</HBox.hgrow>
                     </Button>
                 </VBox>
-
 
                 <!-- Danger Zone -->
                 <VBox spacing="5" styleClass="danger-zone">
