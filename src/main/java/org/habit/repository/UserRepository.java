@@ -1,7 +1,7 @@
-package org.example.repository;
+package org.habit.repository;
 
-import org.example.model.User;
-import org.example.config.DatabaseConfig;
+import org.habit.model.User;
+import org.habit.config.DatabaseConfig;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

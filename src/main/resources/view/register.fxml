@@ -4,7 +4,7 @@
 <?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controller.RegisterController"
+            fx:controller="org.habit.controller.RegisterController"
             stylesheets="@app.css"
             prefWidth="500" prefHeight="550">
 

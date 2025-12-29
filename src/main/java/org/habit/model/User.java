@@ -1,7 +1,7 @@
-package org.example.model;
+package org.habit.model;
 
 import javafx.beans.property.*;
-import org.example.util.PasswordUtil;
+import org.habit.util.PasswordUtil;
 
 public class User {
     private final IntegerProperty id = new SimpleIntegerProperty();

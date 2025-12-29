@@ -1,7 +1,5 @@
-package org.example;
+package org.habit;
 
-import org.example.model.User;
-import org.example.service.UserService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

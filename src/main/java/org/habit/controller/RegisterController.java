@@ -1,11 +1,10 @@
-package org.example.controller;
+package org.habit.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import javafx.scene.input.KeyEvent;
-import org.example.model.User;
-import org.example.service.UserService;
+import org.habit.model.User;
+import org.habit.service.UserService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

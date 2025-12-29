@@ -4,27 +4,24 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controller.DashboardController"
+            fx:controller="org.habit.controller.DashboardController"
             stylesheets="@app.css"
-            prefWidth="800" prefHeight="600">
+            prefWidth="1000" prefHeight="700">
 
-
-
-    <!-- Left Navigation Panel - Made responsive -->
+    <!-- Left Navigation Panel -->
     <left>
         <VBox spacing="10" styleClass="nav-panel" minWidth="150" prefWidth="200" maxWidth="250">
             <Label text="Navigation" styleClass="nav-title"/>
             <Separator styleClass="separator"/>
 
             <!-- Home Button -->
-            <Button fx:id="homeBtn" text="🏠 Home"
+            <Button fx:id="homeBtn" text="🏠 Dashboard"
                     styleClass="nav-btn btn-primary"
                     onAction="#showHome"
                     maxWidth="Infinity">
                 <VBox.margin>
                     <Insets left="5" right="5"/>
                 </VBox.margin>
-                <HBox.hgrow>ALWAYS</HBox.hgrow>
             </Button>
 
             <!-- Profile Button -->
@@ -35,8 +32,24 @@
                 <VBox.margin>
                     <Insets left="5" right="5"/>
                 </VBox.margin>
-                <HBox.hgrow>ALWAYS</HBox.hgrow>
             </Button>
+
+            <Separator styleClass="separator"/>
+
+            <!-- Quick Actions -->
+            <Label text="Quick Actions" styleClass="nav-title"/>
+            <Button text="➕ Create Category"
+                    styleClass="nav-btn btn-success"
+                    onAction="#openCreateCategory"
+                    maxWidth="Infinity"/>
+            <Button text="➕ Create Habit"
+                    styleClass="nav-btn btn-info"
+                    onAction="#openCreateHabit"
+                    maxWidth="Infinity"/>
+            <Button text="🔄 Refresh"
+                    styleClass="nav-btn btn-warning"
+                    onAction="#refreshDashboard"
+                    maxWidth="Infinity"/>
 
             <Separator styleClass="separator"/>
 
@@ -48,45 +61,32 @@
                 <VBox.margin>
                     <Insets left="5" right="5"/>
                 </VBox.margin>
-                <HBox.hgrow>ALWAYS</HBox.hgrow>
             </Button>
 
-            <!-- User Info - Made responsive -->
-            <VBox spacing="5" style="-fx-padding: 20 5 10 5;">
-                <Label fx:id="welcomeLabel" text="Welcome!"
-                       style="-fx-text-fill: white; -fx-font-size: 12px; -fx-wrap-text: true;"/>
-                <Label fx:id="userEmailLabel" text=""
-                       style="-fx-text-fill: #95a5a6; -fx-font-size: 11px; -fx-wrap-text: true;"/>
+            <!-- User Info -->
+            <VBox spacing="5" styleClass="user-info-box">
+                <Label fx:id="welcomeLabel" text="Welcome!" styleClass="user-info-text"/>
             </VBox>
         </VBox>
     </left>
 
-    <!-- Main Content Area - Made responsive -->
+    <!-- Main Content Area -->
     <center>
         <BorderPane fx:id="contentArea" styleClass="content-area">
-            <center>
-                <VBox fx:id="homeContent" spacing="20" alignment="CENTER">
-                    <Label text="🏠 Welcome to Your Dashboard"
-                           styleClass="welcome-text" wrapText="true" maxWidth="Infinity"
-                           textAlignment="CENTER"/>
-                    <Label fx:id="dashboardWelcomeLabel" text=""
-                           styleClass="user-info-text" wrapText="true" maxWidth="Infinity"
-                           textAlignment="CENTER"/>
-                </VBox>
-            </center>
+            <!-- Default content will be loaded here -->
         </BorderPane>
     </center>
 
-    <!-- Status Bar - Made responsive -->
+    <!-- Status Bar -->
     <bottom>
         <HBox styleClass="status-bar" spacing="10">
-            <Label fx:id="statusLabel" text="Ready"
-                   styleClass="status-text" wrapText="true">
+            <Label fx:id="statusLabel" text="Ready" styleClass="status-text">
                 <HBox.hgrow>ALWAYS</HBox.hgrow>
             </Label>
             <Separator orientation="VERTICAL"/>
-            <Label fx:id="loginTimeLabel" text=""
-                   style="-fx-text-fill: #95a5a6; -fx-font-size: 11px; -fx-wrap-text: true;"/>
+            <Label fx:id="loginTimeLabel" text="" styleClass="login-time"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="🔄" onAction="#refreshDashboard" styleClass="btn-refresh"/>
         </HBox>
     </bottom>
 

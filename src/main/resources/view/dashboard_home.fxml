@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.habit.controller.DashboardHomeController"
+            fitToWidth="true" fitToHeight="true" styleClass="dashboard-scroll">
+
+    <VBox spacing="20" style="-fx-padding: 20;">
+
+        <!-- Header -->
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <VBox>
+                <Label fx:id="welcomeLabel" text="Welcome!" styleClass="dashboard-title"/>
+                <Label fx:id="dateLabel" text="" styleClass="dashboard-subtitle"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="📊 View Statistics" styleClass="btn-primary" onAction="#showStatistics"/>
+        </HBox>
+
+        <!-- Statistics Cards -->
+        <HBox spacing="15" styleClass="stats-container">
+            <VBox styleClass="stat-card" spacing="5">
+                <Label text="📂" styleClass="stat-icon"/>
+                <Label fx:id="totalCategoriesLabel" text="0" styleClass="stat-number"/>
+                <Label text="Categories" styleClass="stat-label"/>
+            </VBox>
+
+            <VBox styleClass="stat-card" spacing="5">
+                <Label text="✅" styleClass="stat-icon"/>
+                <Label fx:id="totalHabitsLabel" text="0" styleClass="stat-number"/>
+                <Label text="Total Habits" styleClass="stat-label"/>
+            </VBox>
+
+            <VBox styleClass="stat-card" spacing="5">
+                <Label text="🔥" styleClass="stat-icon"/>
+                <Label fx:id="completedTodayLabel" text="0" styleClass="stat-number"/>
+                <Label text="Completed Today" styleClass="stat-label"/>
+            </VBox>
+
+            <VBox styleClass="stat-card" spacing="5">
+                <Label text="📈" styleClass="stat-icon"/>
+                <Label fx:id="totalProgressLabel" text="0%" styleClass="stat-number"/>
+                <Label text="Overall Progress" styleClass="stat-label"/>
+            </VBox>
+        </HBox>
+
+        <!-- Categories Section -->
+        <VBox spacing="15">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="📁 Your Categories" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="➕ Create Category" onAction="#createCategory" styleClass="btn-success"/>
+                <Button text="➕ Create Habit" onAction="#createHabit" styleClass="btn-info"/>
+            </HBox>
+
+            <!-- Categories Grid -->
+            <GridPane fx:id="categoriesGrid" hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+            </GridPane>
+
+            <!-- No Categories Message -->
+            <VBox fx:id="noCategoriesMessage" spacing="10" alignment="CENTER" visible="false">
+                <Label text="📭 No Categories Yet" styleClass="empty-state-title"/>
+                <Label text="Create your first category to start tracking habits!"
+                       styleClass="empty-state-subtitle"/>
+                <Button text="Create Your First Category" onAction="#createCategory"
+                        styleClass="btn-success btn-large"/>
+            </VBox>
+        </VBox>
+
+        <!-- Recent Habits -->
+        <VBox spacing="15">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="📝 Recent Habits" styleClass="section-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="View All" styleClass="btn-outline"/>
+            </HBox>
+
+            <VBox fx:id="recentHabitsContainer" spacing="10"/>
+
+            <VBox fx:id="noHabitsMessage" spacing="10" alignment="CENTER" visible="false">
+                <Label text="📝 No Habits Yet" styleClass="empty-state-title"/>
+                <Label text="Create your first habit to start building good habits!"
+                       styleClass="empty-state-subtitle"/>
+                <Button text="Create Your First Habit" onAction="#createHabit"
+                        styleClass="btn-info btn-large"/>
+            </VBox>
+        </VBox>
+
+    </VBox>
+</ScrollPane>

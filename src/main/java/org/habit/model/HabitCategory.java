@@ -1,10 +1,8 @@
-package org.example.model;
+package org.habit.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.example.model.Habit;
-import org.example.model.User;
-import org.example.model.Habit;
+
 import javafx.beans.property.*;
 
 public class HabitCategory {
@@ -40,5 +38,30 @@ public class HabitCategory {
     public void SetDescription(String description){this.description.set(description);}
     public void SetProgress(int progress){this.progress.set(progress);}
 
+    public void updateProgress() {
+        if (habits.isEmpty()) {
+            progress.set(0);
+            return;
+        }
+
+        long completedCount = habits.stream()
+                .filter(h -> h.isCompleted().get())
+                .count();
+
+        int percent = (int) ((completedCount * 100.0) / habits.size());
+        progress.set(percent);
+    }
+
+    public int getHabitCount() {
+        return habits.size();
+    }
+
+    public void addHabit(Habit habit) {
+        if (habit.getCategoryId() != this.getId()) {
+            throw new IllegalArgumentException("Habit does not belong to this category");
+        }
+        habits.add(habit);
+        updateProgress();
+    }
 
 }

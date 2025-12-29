@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.habit.controller.CategoryDetailController"
+      spacing="15" alignment="TOP_LEFT"
+      style="-fx-padding: 20;">
+
+    <!-- Back Button -->
+    <HBox spacing="10">
+        <Button text="← Back" onAction="#handleBack" styleClass="btn-primary"/>
+        <Label fx:id="categoryTitleLabel" text="Category" styleClass="section-title"/>
+    </HBox>
+
+    <!-- Category Info -->
+    <VBox spacing="5" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-background-radius: 8;">
+        <Label fx:id="descriptionLabel" text="" wrapText="true"/>
+        <HBox spacing="20">
+            <Label fx:id="progressLabel" text="Progress: 0%" styleClass="progress-text"/>
+            <Label fx:id="habitCountLabel" text="0 habits" styleClass="habit-count"/>
+            <Label fx:id="createdLabel" text="" style="-fx-text-fill: #95a5a6; -fx-font-size: 12px;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Habits in this category -->
+    <VBox spacing="10">
+        <Label text="Habits in this Category" styleClass="section-subtitle"/>
+        <VBox fx:id="habitsList" spacing="8"/>
+        <Button text="➕ Add New Habit to This Category" onAction="#handleAddHabit" styleClass="btn-success"/>
+    </VBox>
+
+</VBox>

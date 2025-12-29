@@ -1,4 +1,4 @@
-package org.example.util;
+package org.habit.util;
 
 import javax.mail.*;
 import javax.mail.internet.*;

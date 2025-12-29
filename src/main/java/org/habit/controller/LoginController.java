@@ -1,8 +1,8 @@
-package org.example.controller;
+package org.habit.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.example.service.UserService;
+import org.habit.service.UserService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

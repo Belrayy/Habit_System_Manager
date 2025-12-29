@@ -1,16 +1,16 @@
-package org.example.controller;
+package org.habit.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.example.model.User;
-import org.example.service.UserService;
+import org.habit.model.User;
+import org.habit.service.UserService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import org.example.util.EmailUtil;
+import org.habit.util.EmailUtil;
 import javafx.application.Platform;
 
 import java.io.IOException;

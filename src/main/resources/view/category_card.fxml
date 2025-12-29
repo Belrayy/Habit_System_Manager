@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.habit.controller.CategoryCardController"
+      spacing="10" styleClass="category-card"
+      alignment="CENTER_LEFT">
+
+    <!-- Progress Circle -->
+    <StackPane styleClass="progress-circle">
+        <Label fx:id="progressLabel" text="0%" styleClass="progress-text"/>
+    </StackPane>
+
+    <!-- Category Info -->
+    <VBox spacing="5" HBox.hgrow="ALWAYS">
+        <Label fx:id="titleLabel" text="Category Title" styleClass="category-title"/>
+        <Label fx:id="descriptionLabel" text="No description" styleClass="category-description"/>
+        <Label fx:id="habitCountLabel" text="0 habits" styleClass="habit-count"/>
+    </VBox>
+
+    <!-- Actions -->
+    <VBox spacing="5">
+        <Button text="➕ Add Habit" styleClass="btn-small btn-success" onAction="#handleAddHabit"/>
+        <Button text="👁 View" styleClass="btn-small btn-primary" onAction="#handleView"/>
+        <Button text="✏ Edit" styleClass="btn-small btn-info" onAction="#handleEdit"/>
+    </VBox>
+
+</HBox>

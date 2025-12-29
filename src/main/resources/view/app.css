@@ -159,6 +159,11 @@
     -fx-padding: 20px;
 }
 
+.nav-subtitle{
+    -fx-background-color: #2c3e50;
+    -fx-padding: 20px;
+}
+
 .nav-panel-small {
     -fx-background-color: #2c3e50;
     -fx-padding: 10px;
@@ -451,4 +456,115 @@
 
 .btn-info:hover {
     -fx-background-color: #138496;
+}
+
+/* Category Cards */
+.category-card {
+    -fx-padding: 15;
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.category-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.category-description {
+    -fx-font-size: 13px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.progress-circle {
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-background-radius: 30;
+    -fx-background-color: #ecf0f1;
+    -fx-alignment: center;
+}
+
+.progress-text {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.habit-count {
+    -fx-font-size: 12px;
+    -fx-text-fill: #95a5a6;
+}
+
+/* Habit Cards */
+.habit-card {
+    -fx-padding: 12;
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1);
+}
+
+.habit-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.streak-badge {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e74c3c;
+    -fx-padding: 2 6;
+    -fx-background-color: #ffebee;
+    -fx-background-radius: 10;
+}
+
+.progress-text-small {
+    -fx-font-size: 11px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.last-completed {
+    -fx-font-size: 11px;
+    -fx-text-fill: #95a5a6;
+}
+
+/* Statistics */
+.stat-number {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.stat-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* Section Titles */
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.section-subtitle {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+/* Buttons */
+.btn-circle {
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+    -fx-background-radius: 15;
+}
+
+.btn-small {
+    -fx-font-size: 11px;
+    -fx-padding: 3 8;
 }

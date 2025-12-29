@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.habit.controller.CreateHabitController"
+      spacing="15" alignment="CENTER"
+      styleClass="content-area">
+
+    <Label text="Create Habit" styleClass="title-text"/>
+
+    <ComboBox fx:id="categoryComboBox" promptText="Select Category" prefWidth="200"/>
+    <TextField fx:id="titleField" promptText="Habit title"/>
+    <TextArea fx:id="descriptionField" promptText="Description"/>
+    <TextField fx:id="targetField" promptText="Daily target"/>
+
+    <HBox spacing="10">
+        <Button text="Save" onAction="#handleSave" styleClass="btn-primary"/>
+        <Button text="Cancel" onAction="#handleCancel" styleClass="btn-danger"/>
+    </HBox>
+
+</VBox>

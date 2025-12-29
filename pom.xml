@@ -91,7 +91,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>org.example.Main</mainClass>
+                    <mainClass>org.habit.Main</mainClass>
                 </configuration>
             </plugin>
 
@@ -101,7 +101,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>org.example.Main</mainClass>
+                    <mainClass>org.habit.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.habit.controller.HabitCardController"
+      spacing="10" styleClass="habit-card"
+      alignment="CENTER_LEFT">
+
+    <!-- Completion Checkbox -->
+    <CheckBox fx:id="completionCheckBox" onAction="#handleCompletionToggle"/>
+
+    <!-- Habit Info -->
+    <VBox spacing="3" HBox.hgrow="ALWAYS">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label fx:id="titleLabel" text="Habit Title" styleClass="habit-title"/>
+            <Label fx:id="streakLabel" text="🔥 0" styleClass="streak-badge"/>
+        </HBox>
+
+        <ProgressBar fx:id="progressBar" prefWidth="200" progress="0.0"/>
+
+        <HBox spacing="10">
+            <Label fx:id="progressText" text="0/1" styleClass="progress-text-small"/>
+            <Label fx:id="lastCompletedLabel" text="" styleClass="last-completed"/>
+        </HBox>
+    </VBox>
+
+    <!-- Actions -->
+    <Button text="➕" styleClass="btn-circle btn-success" onAction="#handleIncrement"/>
+    <Button text="✏" styleClass="btn-circle btn-info" onAction="#handleEdit"/>
+    <Button text="🗑" styleClass="btn-circle btn-danger" onAction="#handleDelete"/>
+
+</HBox>

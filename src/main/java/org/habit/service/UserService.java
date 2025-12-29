@@ -1,8 +1,8 @@
-package org.example.service;
+package org.habit.service;
 
-import org.example.model.User;
-import org.example.repository.UserRepository;
-import org.example.util.PasswordUtil;
+import org.habit.model.User;
+import org.habit.repository.UserRepository;
+import org.habit.util.PasswordUtil;
 import java.util.List;
 import java.util.Optional;
 

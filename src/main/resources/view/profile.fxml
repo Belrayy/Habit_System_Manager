@@ -4,7 +4,7 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controller.ProfileController"
+            fx:controller="org.habit.controller.ProfileController"
             stylesheets="@app.css"
             prefWidth="800" prefHeight="600">
 
