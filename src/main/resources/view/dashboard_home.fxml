@@ -16,7 +16,6 @@
                 <Label fx:id="dateLabel" text="" styleClass="dashboard-subtitle"/>
             </VBox>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="📊 View Statistics" styleClass="btn-primary" onAction="#showStatistics"/>
         </HBox>
 
         <!-- Statistics Cards -->
@@ -48,12 +47,7 @@
 
         <!-- Categories Section -->
         <VBox spacing="15">
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="📁 Your Categories" styleClass="section-title"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button text="➕ Create Category" onAction="#createCategory" styleClass="btn-success"/>
-                <Button text="➕ Create Habit" onAction="#createHabit" styleClass="btn-info"/>
-            </HBox>
+            <Label text="📁 Your Categories" styleClass="section-title"/>
 
             <!-- Categories Grid -->
             <GridPane fx:id="categoriesGrid" hgap="15" vgap="15">
@@ -74,12 +68,8 @@
         </VBox>
 
         <!-- Recent Habits -->
-        <VBox spacing="15">
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="📝 Recent Habits" styleClass="section-title"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button text="View All" styleClass="btn-outline"/>
-            </HBox>
+        <VBox spacing="15" visible="false" managed="false">
+            <Label text="📝 Recent Habits" styleClass="section-title"/>
 
             <VBox fx:id="recentHabitsContainer" spacing="10"/>
 

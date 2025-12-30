@@ -362,11 +362,6 @@ public class DashboardHomeController {
         System.out.println("Navigate to create habit");
     }
 
-    @FXML
-    private void showStatistics() {
-        // You can implement a statistics view
-        System.out.println("Show statistics view");
-    }
 
     private void viewCategory(HabitCategory category) {
         try {

@@ -13,7 +13,7 @@
     <ComboBox fx:id="categoryComboBox" promptText="Select Category" prefWidth="200"/>
     <TextField fx:id="titleField" promptText="Habit title"/>
     <TextArea fx:id="descriptionField" promptText="Description"/>
-    <TextField fx:id="targetField" promptText="Daily target"/>
+    <TextField fx:id="targetField" promptText="Daily target (Number of day(s))"/>
 
     <HBox spacing="10">
         <Button text="Save" onAction="#handleSave" styleClass="btn-primary"/>
